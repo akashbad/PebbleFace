@@ -20,3 +20,45 @@ var text = new UI.Text({
 // Add to splashWindow and show
 splashWindow.add(text);
 splashWindow.show();
+
+var parseFeed = function(data, quantity) {
+  var items = [];
+  for(var i = 0; i < quantity; i++) {
+    // Always upper case the description string
+    var title = data.list[i].weather[0].main;
+    title = title.charAt(0).toUpperCase() + title.substring(1);
+
+    // Get date/time substring
+    var time = data.list[i].dt_txt;
+    time = time.substring(time.indexOf('-') + 1, time.indexOf(':') + 3);
+
+    // Add to menu items array
+    items.push({
+      title:title,
+      subtitle:time
+    });
+  }
+
+  // Finally return whole array
+  return items;
+};
+
+// Make request to openweathermap.org
+ajax(
+  {
+    url:'http://api.openweathermap.org/data/2.5/forecast?q=Seattle',
+    type:'json'
+  },
+  function(data) {
+    // Create an array of Menu items
+    var menuItems = parseFeed(data, 10);
+    
+    // Check the items are extracted OK
+    for(var i = 0; i < menuItems.length; i++) {
+      console.log(menuItems[i].title + ' | ' + menuItems[i].subtitle);
+    }
+  },
+  function(error) {
+    console.log('Download failed: ' + error);
+  }
+);
