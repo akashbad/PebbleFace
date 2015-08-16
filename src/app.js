@@ -2,9 +2,9 @@ var UI = require('ui');
 var ajax = require('ajax');
 
 
-var card = new UI.card({
+var card = new UI.Card({
   title: 'Weather',
-    substitle: 'Fetching...'
+  substitle: 'Fetching...'
 });
 
 card.show();
