@@ -57,6 +57,18 @@ ajax(
     for(var i = 0; i < menuItems.length; i++) {
       console.log(menuItems[i].title + ' | ' + menuItems[i].subtitle);
     }
+    
+    // Construct Menu to show to user
+    var resultsMenu = new UI.Menu({
+      sections: [{
+        title: 'Current Forecast',
+        items: menuItems
+      }]
+    });
+    
+    // Show the Menu, hide the splash
+    resultsMenu.show();
+    splashWindow.hide();
   },
   function(error) {
     console.log('Download failed: ' + error);
